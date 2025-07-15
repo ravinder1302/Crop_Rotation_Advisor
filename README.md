@@ -11,7 +11,7 @@ The Crop Rotation System is an integrated web platform that leverages machine le
 - **Resource Guides:** Educational content on soil, weather, pests, fertilizers, and market information.
 - **Roadmap & Timeline:** Visual guides for crop rotation planning.
 - **Modern UI/UX:** Responsive, animated, and accessible design.
-
+  
 ## Architecture
 
 - **Frontend:** HTML, CSS, JavaScript (with GSAP, AOS for animations)
