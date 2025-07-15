@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Rotation Road Map</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --main-bg-color: #f0f8ff;
+            --gradient-start: #e6f3ff;
+            --gradient-end: #f0f8ff;
+        }
+
+        body {
+            background: var(--main-bg-color);
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #E5F4E3, #DAE9D8);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .rotation-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .rotation-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .rotation-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .rotation-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .rotation-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .rotation-icon {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: #4CAF50;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #4CAF50;
+            border-radius: 50%;
+            top: 15px;
+            right: -17px;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Crop Rotation Road Map</h1>
+
+        <div class="rotation-types">
+            <div class="rotation-card">
+                <i class="fas fa-sync rotation-icon"></i>
+                <h3>Two-Year Rotation</h3>
+                <p>Alternating between two different crops, typically a legume and a cereal crop. This helps in nitrogen fixation and pest control.</p>
+            </div>
+
+            <div class="rotation-card" style="animation-delay: 0.2s;">
+                <i class="fas fa-seedling rotation-icon"></i>
+                <h3>Three-Year Rotation</h3>
+                <p>Rotating between three crops in sequence, often including a root crop, cereal, and legume for balanced soil health.</p>
+            </div>
+
+            <div class="rotation-card" style="animation-delay: 0.4s;">
+                <i class="fas fa-leaf rotation-icon"></i>
+                <h3>Four-Year Rotation</h3>
+                <p>Complex rotation system involving four different crops, maximizing soil benefits and minimizing pest and disease risks.</p>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Spring</h3>
+                    <p>Plant nitrogen-fixing legumes like peas or beans</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Summer</h3>
+                    <p>Grow heavy feeding crops like corn or tomatoes</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Fall</h3>
+                    <p>Plant light feeding crops like root vegetables</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>Winter</h3>
+                    <p>Use cover crops or let soil rest</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ... existing code ... -->
+
+<!-- Cropping Patterns Section -->
+<section class="cropping-patterns">
+    <div class="pattern-container">
+        <!-- Center Circle -->
+        <div class="pattern-circle center" data-aos="zoom-in">
+            <h3>Cropping Patterns</h3>
+        </div>
+        
+        <!-- Surrounding Circles -->
+        <div class="pattern-circle mono" data-aos="fade-right">
+            <h3>Mono Cropping</h3>
+        </div>
+        
+        <div class="pattern-circle mixed" data-aos="fade-left">
+            <h3>Mixed Cropping</h3>
+        </div>
+        
+        <div class="pattern-circle inter" data-aos="fade-up">
+            <h3>Inter Cropping</h3>
+        </div>
+        
+        <div class="pattern-circle rotation" data-aos="fade-down">
+            <h3>Crop Rotation</h3>
+        </div>
+    </div>
+</section>
+
+<style>
+.cropping-patterns {
+    background: linear-gradient(135deg, #1a1f25 0%, #2c3e50 100%);
+    padding: 100px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pattern-container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+}
+
+.pattern-circle {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.pattern-circle h3 {
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 15px;
+    margin: 0;
+}
+
+/* Center Circle */
+.pattern-circle.center {
+    width: 200px;
+    height: 200px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 255, 135, 0.2);
+    z-index: 2;
+}
+
+/* Positioning surrounding circles */
+.pattern-circle.mono {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pattern-circle.mixed {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pattern-circle.inter {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.pattern-circle.rotation {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Hover effects */
+.pattern-circle:hover {
+    transform: scale(1.1);
+    background: rgba(0, 255, 135, 0.3);
+    border-color: rgba(0, 255, 135, 0.5);
+    box-shadow: 0 0 20px rgba(0, 255, 135, 0.3);
+}
+
+/* Keep center circle centered on hover */
+.pattern-circle.center:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Connecting lines using pseudo-elements */
+.pattern-container::before,
+.pattern-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    border: 2px solid rgba(0, 255, 135, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: rotate 20s linear infinite;
+}
+
+.pattern-container::after {
+    width: 60%;
+    height: 60%;
+    animation-direction: reverse;
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .pattern-container {
+        width: 300px;
+        height: 300px;
+    }
+
+    .pattern-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .pattern-circle.center {
+        width: 120px;
+        height: 120px;
+    }
+
+    .pattern-circle h3 {
+        font-size: 0.9rem;
+    }
+}
+</style>
+
+<!-- ... existing code ... -->
+</body>
+</html>
+<style>
+    
+   
+
+   

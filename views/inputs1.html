@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Prediction | CropAI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-green: #00ff8c;
+            --dark-bg: #1a1f25;
+            --card-bg: #252D34;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: var(--dark-bg);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .prediction-container {
+            width: min(900px, 100%);
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: var(--text-primary);
+            font-size: 32px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .input-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            color: var(--neon-green);
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .input-group input {
+            height: 50px;
+            padding: 0 16px;
+            background: rgba(26, 31, 37, 0.95);
+            border: 1px solid rgba(0, 255, 140, 0.2);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:hover,
+        .input-group input:focus {
+            border-color: var(--neon-green);
+            background-color: rgba(0, 255, 140, 0.05);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .predict-btn {
+            background: var(--neon-green);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 200px;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .predict-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 140, 0.4);
+        }
+
+        .result-box {
+            margin-top: 20px;
+            text-align: center;
+            color: var(--neon-green);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .input-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="prediction-container">
+    <div class="header">
+        <h1>Crop Prediction System</h1>
+        <p>Enter details for crop recommendation</p>
+    </div>
+
+    <form id="crop-form" action="/predict-crop" method="post">
+        <div class="input-section">
+            <div class="input-group">
+                <label for="N">Nitrogen (N)</label>
+                <input type="number" id="N" required>
+            </div>
+            <div class="input-group">
+                <label for="P">Phosphorus (P)</label>
+                <input type="number" id="P" required>
+            </div>
+            <div class="input-group">
+                <label for="K">Potassium (K)</label>
+                <input type="number" id="K" required>
+            </div>
+            <div class="input-group">
+                <label for="temperature">Temperature (°C)</label>
+                <input type="number" id="temperature" required>
+            </div>
+            <div class="input-group">
+                <label for="humidity">Humidity (%)</label>
+                <input type="number" id="humidity" required>
+            </div>
+            <div class="input-group">
+                <label for="ph">pH Level</label>
+                <input type="number" id="ph" step="0.01" required>
+            </div>
+            <div class="input-group">
+                <label for="rainfall">Rainfall (mm)</label>
+                <input type="number" id="rainfall" required>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button type="submit" class="predict-btn">Predict Crop</button>
+        </div>
+    </form>
+
+    <div id="result" class="result-box"></div>
+</div>
+
+<script>
+    document.getElementById('crop-form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const formData = {
+            N: +document.getElementById('N').value,
+            P: +document.getElementById('P').value,
+            K: +document.getElementById('K').value,
+            temperature: +document.getElementById('temperature').value,
+            humidity: +document.getElementById('humidity').value,
+            ph: +document.getElementById('ph').value,
+            rainfall: +document.getElementById('rainfall').value,
+        };
+
+        try {
+           const response = await fetch('/predict', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+    });
+
+      const result = await response.json();
+      document.getElementById('result').innerText = result.predicted_crop 
+        ? `🌱 Predicted Crop: ${result.predicted_crop} `
+        : `⚠ Error: ${result.error}`;
+} catch (error) {
+    document.getElementById('result').innerText = "❌ Server error!";
+    console.error("Error:", error);
+}
+});
+</script>
+</body>
+</html>
+

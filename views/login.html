@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmConnect Login</title>
+    <link rel="icon" type="" href="favicon.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+                url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            width: 100%;
+            max-width: 360px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .login-header {
+            font-size: 2.3rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 1.rem;
+            text-align: center;
+        }
+
+        .welcome-message {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        /* Style for CropAI text */
+        .brand-name {
+            color:#19f08b ;  /* Same green as the button */
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input:focus {
+            border-color: #19f08b;
+            box-shadow: 0 0 0 2px rgba(25, 240, 139, 0.2);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background: #19f08b;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background: #0ed77a;
+            transform: translateY(-2px);
+        }
+
+        .links-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.1rem;
+            font-size: 0.9rem;
+        }
+
+        a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #19f08b;
+        }
+
+        
+
+        .login-container:hover::before {
+            left: 100%;
+            transition: 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .g_id_signin {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .g_id_signin > div {
+            width: 100% !important;
+        }
+
+        #googleBtn {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="login-header">Welcome Back</h1>
+        <p class="welcome-message">Sign in to continue to <span class="brand-name">CropAI</span></p>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+            
+            <div class="form-group">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+
+            <button type="submit">Sign In</button>
+        </form>
+
+        <div class="google-btn" id="googleBtn">
+            <div id="g_id_onload"
+                 data-client_id="1008796212013-aj90vpg0vlk4g10p6m9hjob0kcuvlchv.apps.googleusercontent.com"
+                 data-context="signin"
+                 data-callback="handleGoogleSignIn"
+                 data-auto_select="false"
+                 data-itp_support="true">
+            </div>
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-size="large"
+                 data-theme="outline"
+                 data-text="continue_with"
+                 data-shape="rectangular"
+                 data-logo_alignment="left">
+            </div>
+        </div>
+
+        <div class="links-container">
+            <a href="forgot-password.html">Forgot password?</a>
+            <a href="register.html">Create account</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Store user data in localStorage
+                    localStorage.setItem('userData', JSON.stringify(data.user));
+                    // Redirect to dashboard
+                    window.location.href = data.redirectUrl;
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Error logging in. Please try again.');
+            }
+        });
+
+        function handleGoogleSignIn(response) {
+            // Send the token to your server
+            fetch('/auth/google', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    credential: response.credential
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // Store user data
+                    localStorage.setItem('userData', JSON.stringify(data.user));
+                    // Redirect to dashboard
+                    window.location.href = data.redirectUrl;
+                } else {
+                    alert(data.message || 'Login failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Login failed. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>

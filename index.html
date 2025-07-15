@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Rotation AI</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <link rel="icon" type="" href="favicon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,hi,te,ta,kn,ml',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+            multilanguagePage: true
+        }, 'google_translate_element');
+    }
+    </script>
+    <!-- Add Google Cloud Translation API -->
+    <script src="https://www.googleapis.com/translate/v2?key=YOUR_API_KEY"></script>
+    
+    <!-- Add jQuery (required for easier DOM manipulation) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    
+<!-- Custom Preloader -->
+<div class="preloader">
+    <div class="loader"></div>
+</div>
+
+<!-- Modern Navigation -->
+<header class="header">
+    <div class="nav-container">
+        <!-- Menu Icon -->
+        <div class="nav-left">
+        <div class="menu-icon" id="menuToggle">
+                <div class="menu-line"></div>
+                <div class="menu-line"></div>
+                <div class="menu-line"></div>
+        </div>
+            <span class="brand-name">CropAI</span>
+        </div>
+
+        <!-- Right Nav Icons -->
+        <div class="nav-right">
+            <div class="nav-icon language-selector">
+                <i class="fas fa-globe"></i>
+                <div class="language-dropdown">
+                    <div class="language-option" data-lang="en" data-name="English">
+                        <span class="lang-name">English</span>
+                </div>
+                    <div class="language-option" data-lang="hi" data-name="हिंदी">
+                        <span class="lang-name">हिंदी</span>
+            </div>
+                    <div class="language-option" data-lang="te" data-name="తెలుగు">
+                        <span class="lang-name">తెలుగు</span>
+                    </div>
+                    <div class="language-option" data-lang="ta" data-name="தமிழ்">
+                        <span class="lang-name">தமிழ்</span>
+                    </div>
+                    <div class="language-option" data-lang="kn" data-name="ಕನ್ನಡ">
+                        <span class="lang-name">ಕನ್ನಡ</span>
+                    </div>
+                    <div class="language-option" data-lang="ml" data-name="മലയാളം">
+                        <span class="lang-name">മലയാളം</span>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="nav-icon">
+                <a href="login.html">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide-out Menu -->
+    <div class="side-menu" id="sideMenu">
+        <div class="brand-section">
+            <span class="brand-text">Crop<span class="highlight">AI</span></span>
+        </div>
+        <nav class="menu-items">
+            <a href="#Home" class="menu-item active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#resources" class="menu-item">
+                <i class="fas fa-book"></i>
+                <span>Resources</span>
+            </a>
+            <a href="#services" class="menu-item">
+                <i class="fas fa-leaf"></i>
+                <span>Services</span>
+            </a>
+            <a href="#tools" class="menu-item">
+                <i class="fas fa-tools"></i>
+                <span>Tools</span>
+            </a>
+            <a href="#contact" class="menu-item">
+                <i class="fas fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+            <a href="#about" class="menu-item">
+                <i class="fas fa-info-circle"></i>
+                <span>About Us</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-container">
+            <div class="search-header">
+                <input type="text" placeholder="Search..." class="search-input">
+            </div>
+            <div class="search-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="soil">Soil Types</button>
+                <button class="category-btn" data-category="crops">Crops</button>
+                <button class="category-btn" data-category="techniques">Techniques</button>
+            </div>
+            <div class="search-results">
+                <!-- Results will be populated dynamically -->
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+/* Updated color scheme for navigation and associated elements */
+:root {
+    /* Dashboard matching colors */
+    --dark-bg: #1a1f25;
+    --card-bg: #252D34;
+    --neon-green: #00ff8c;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.85);
+    --nav-bg: #1a1f25;          /* Match dashboard background */
+    --nav-hover: #252D34;       /* Match dashboard card background */
+    --nav-text: #ffffff;        /* Match dashboard text */
+    --nav-accent: #00ff8c;      /* Match dashboard accent */
+    --nav-border: rgba(0, 255, 140, 0.2); /* Match dashboard borders */
+    --dropdown-bg: #252D34;     /* Match dashboard card background */
+}
+
+/* Updated Navigation Styles */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--dark-bg);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(0, 255, 140, 0.1);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Left side navigation */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Menu Icon */
+.menu-icon {
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1002;
+    transition: all 0.3s ease;
+}
+
+.menu-line {
+    width: 24px;
+    height: 2px;
+    background-color: var(--neon-green);
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/* Menu Icon Animation when active */
+.menu-icon.active .menu-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-icon.active .menu-line:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-icon.active .menu-line:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Brand Name */
+.brand-name {
+    color: var(--neon-green);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+/* Right Nav Icons */
+.nav-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.nav-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 255, 140, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-icon i {
+    color: var(--neon-green);
+    font-size: 1.2rem;
+}
+
+.nav-icon:hover {
+    background: rgba(0, 255, 140, 0.2);
+}
+
+.nav-icon a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neon-green);
+    text-decoration: none;
+}
+
+/* Hover effects */
+.menu-icon:hover .menu-line {
+    background-color: var(--neon-green);
+}
+
+/* Root Variables */
+:root {
+    --dark-bg: #1a1f25;
+    --neon-green: #00ff8c;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0.8rem 1rem;
+    }
+
+    .brand-name {
+        font-size: 1.2rem;
+    }
+}
+
+/* Side Menu */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 250px;
+    height: 100vh;
+    background: var(--dark-bg);
+    transition: all 0.3s ease;
+    z-index: 1001;
+    border-right: 1px solid rgba(0, 255, 140, 0.1);
+    overflow-y: auto;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.side-menu.active {
+    left: 0;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.brand-section {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.brand-text .highlight {
+    color: var(--neon-green);
+}
+
+.menu-items {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    gap: 12px;
+}
+
+.menu-item i {
+    width: 20px;
+    text-align: center;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.menu-item span {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.menu-item:hover {
+    background: rgba(0, 255, 140, 0.1);
+    color: var(--neon-green);
+}
+
+.menu-item.active {
+    background: rgba(0, 255, 140, 0.1);
+    color: var(--neon-green);
+}
+
+.menu-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: var(--neon-green);
+    box-shadow: 0 0 10px var(--neon-green);
+}
+
+/* Close button styling */
+.close-menu {
+    display: none; /* Hide any existing close buttons */
+}
+
+/* Main Content Adjustment */
+.main-content {
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+@media (min-width: 769px) {
+    .side-menu {
+        left: -300px; /* Keep hidden on desktop too */
+    }
+    
+    .main-content {
+        margin-left: 0; /* Remove margin since sidebar is hidden */
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .side-menu {
+        left: -300px;
+    }
+
+    .side-menu.active {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+/* Search Overlay */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(5, 8, 7, 0.95);
+    display: none;
+    z-index: 1002;
+}
+
+.search-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.search-header {
+    position: relative;
+    margin-bottom: 2rem;
+    display: flex;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    color: var(--nav-text);
+    font-size: 1.2rem;
+}
+
+.search-input::placeholder {
+    color: rgba(232, 245, 233, 0.7);
+}
+
+.search-categories {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.category-btn {
+    padding: 0.5rem 1rem;
+    background: var(--dropdown-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 20px;
+    color: var(--nav-text);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.category-btn.active {
+    background: var(--nav-accent);
+    color: var(--nav-bg);
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .brand-name {
+        font-size: 1.5rem;
+    }
+    
+    .search-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
+
+/* Optional: Add overlay when menu is open */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Language Selector Styles */
+.language-selector {
+    position: relative;
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 160px;
+    background: var(--card-bg);
+    border: 1px solid rgba(0, 255, 140, 0.2);
+    border-radius: 8px;
+    padding: 8px 0;
+    margin-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.language-selector:hover .language-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-option {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.language-option:hover {
+    background: rgba(0, 255, 140, 0.1);
+}
+
+.lang-name {
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    margin-left: 8px;
+}
+
+/* Add arrow indicator */
+.language-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 20px;
+    width: 10px;
+    height: 10px;
+    background: var(--card-bg);
+    transform: rotate(45deg);
+    border-left: 1px solid rgba(0, 255, 140, 0.2);
+    border-top: 1px solid rgba(0, 255, 140, 0.2);
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--neon-green);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    color: var(--neon-green);
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+</style>
+
+<script>
+// Menu Toggle Functionality
+const menuToggle = document.getElementById('menuToggle');
+const sideMenu = document.getElementById('sideMenu');
+const body = document.body;
+
+function toggleMenu() {
+    menuToggle.classList.toggle('active');
+    sideMenu.classList.toggle('active');
+    body.classList.toggle('menu-open');
+}
+
+function closeMenu() {
+    menuToggle.classList.remove('active');
+    sideMenu.classList.remove('active');
+    body.classList.remove('menu-open');
+}
+
+// Event Listeners
+menuToggle.addEventListener('click', toggleMenu);
+
+// Close menu when clicking anywhere on the page except the menu and menu toggle
+document.addEventListener('click', (e) => {
+    if (!sideMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+        closeMenu();
+    }
+});
+
+// Close menu on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeMenu();
+    }
+});
+
+// Handle menu item clicks
+const menuItems = document.querySelectorAll('.menu-item');
+menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+        // Remove active class from all items
+        menuItems.forEach(i => i.classList.remove('active'));
+        // Add active class to clicked item
+        item.classList.add('active');
+        // Close menu
+        closeMenu();
+    });
+});
+
+// Handle window resize
+let windowWidth = window.innerWidth;
+window.addEventListener('resize', () => {
+    if (window.innerWidth !== windowWidth) {
+        windowWidth = window.innerWidth;
+        closeMenu();
+    }
+});
+
+// Search Toggle
+const searchIcon = document.querySelector('.search-icon');
+const searchOverlay = document.getElementById('searchOverlay');
+
+// Show search overlay
+searchIcon.addEventListener('click', () => {
+    searchOverlay.style.display = 'block';
+});
+
+// Close search overlay when clicking outside
+document.addEventListener('click', (e) => {
+    if (e.target === searchOverlay) {
+        searchOverlay.style.display = 'none';
+    }
+});
+
+// Close search overlay on escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchOverlay.style.display === 'block') {
+        searchOverlay.style.display = 'none';
+    }
+});
+
+// Language Selection Handler
+const langOptions = document.querySelectorAll('.lang-option');
+let currentLang = 'en'; // Default language
+
+langOptions.forEach(option => {
+    option.addEventListener('click', (e) => {
+        e.preventDefault();
+        const newLang = option.getAttribute('data-lang');
+        
+        // Remove active class from all options
+        langOptions.forEach(opt => opt.classList.remove('active'));
+        
+        // Add active class to selected option
+        option.classList.add('active');
+        
+        // Update current language
+        currentLang = newLang;
+        
+        // Here you can add your translation logic
+        translatePage(newLang);
+    });
+});
+
+function translatePage(lang) {
+    // Example translation function
+    switch(lang) {
+        case 'hi':
+            // Hindi translations
+            document.querySelector('.hero h1').textContent = 'एआई इनसाइट्स के साथ फसल रोटेशन को अनुकूलित करें';
+            // Add more translations as needed
+            break;
+        case 'te':
+            // Telugu translations
+            document.querySelector('.hero h1').textContent = 'AI ఇన్సైట్స్‌తో పంట రొటేషన్‌ను అనుకూలీకరించండి';
+            break;
+        case 'kn':
+            // Kannada translations
+            document.querySelector('.hero h1').textContent = 'AI ಇನ್ಸೈಟ್ಸ್‌ನೊಂದಿಗೆ ಬೆಳೆ ರೊಟೇಷನ್ ಅನ್ನು ಆಪ್ಟಿಮೈಸ್ ಮಾಡಿ';
+            break;
+        case 'ta':
+            // Tamil translations
+            document.querySelector('.hero h1').textContent = 'AI இன்சைட்ஸ் மூலம் பயிர் சுழற்சியை உகந்ததாக்குங்கள்';
+            break;
+        default:
+            // English (default)
+            document.querySelector('.hero h1').textContent = 'Optimize Your Crop Rotation with AI Insights';
+    }
+}
+
+// Category Buttons
+const categoryBtns = document.querySelectorAll('.category-btn');
+
+categoryBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        // Implement category filtering logic here
+    });
+});
+</script>
+
+
+
+
+
+
+<!-- Hero Section -->
+ 
+<style>
+/* Hero Background Image */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1560493676-04071c5f467b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2534&q=80');
+    
+   
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.4) saturate(1.2);
+    z-index: -1;
+}
+
+/* Ensure hero has relative positioning for z-index stacking */
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    background: linear-gradient(45deg, #ffffff, #00ff87);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.cta-btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    color: #fff;
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    border-radius: 50px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,255,135,0.4);
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+}
+</style>
+<section class="hero" id="Home">
+    
+    <div class="hero-content" data-aos="fade-up">
+        <h1>Optimize Your Crop Rotation with AI Insights</h1>
+        <p>Make smarter, sustainable farming decisions with our advanced AI-powered crop rotation recommendations.</p>
+        <a href="road_map.html" class="cta-btn">Get Started</a>
+    </div>
+</section>
+
+<!-- What is Crop Rotation Section -->
+<style>
+.about-crop-rotation {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--card-bg) 100%);
+    min-height: 80vh; /* Changed from fixed height to min-height */
+    width: 100vw; /* Full viewport width */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 5vh 5vw; /* Responsive padding */
+    box-sizing: border-box;
+}
+
+.about-crop-rotation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('pattern.png') repeat;
+    opacity: 0.1;
+    animation: patternMove 20s linear infinite;
+}
+
+.about-crop-rotation::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(0,255,135,0.1) 0%, transparent 70%);
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.about-crop-rotation h2,
+.about-crop-rotation p,
+.farming-images {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-crop-rotation h2 {
+    font-size: min(4vw, 2.8rem); /* Responsive font size */
+    margin-bottom: 2rem;
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.about-crop-rotation p {
+    font-size: min(2.5vw, 1.2rem); /* Responsive font size */
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+}
+
+.farming-images {
+    display: flex;
+    justify-content: center;
+    gap: min(3vw, 20px); /* Responsive gap */
+    flex-wrap: wrap;
+    padding: 2vh 0;
+}
+
+.farming-images img {
+    width: min(28vw, 300px); /* Responsive width */
+    height: auto;
+    box-shadow: 0 10px 30px rgba(0, 255, 135, 0.2);
+    border: 3px solid rgba(96, 239, 255, 0.2);
+    object-fit: cover;
+}
+
+@keyframes patternMove {
+    from { background-position: 0 0; }
+    to { background-position: 100% 100%; }
+}
+
+@keyframes pulseGlow {
+    0% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+    100% { opacity: 0.4; }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .about-crop-rotation {
+        padding: 3vh 3vw;
+    }
+    
+    .farming-images {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .farming-images img {
+        width: 90vw;
+        max-width: 400px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (min-width: 2000px) {
+    .about-crop-rotation {
+        padding: 8vh 15vw;
+    }
+}
+</style>
+
+<section id="crop-rotation" class="about-crop-rotation">
+    <h2 data-aos="fade-up">What is Crop Rotation?</h2>
+    <p data-aos="fade-up">Crop rotation is a sustainable farming practice where different crops are planted in the same area in sequential seasons to improve soil fertility, reduce pest and disease risks, and increase crop yield.</p>
+    <p data-aos="fade-up">By rotating crops, farmers can naturally manage soil health and fertility, avoid the build-up of pests and diseases, and use resources more efficiently. Crop rotation is a cornerstone of regenerative agriculture, promoting biodiversity and ecological balance.</p>
+    <div class="farming-images">
+        <img src="section1.jpeg" alt="Farming Image 1" class="animated-image left" data-aos="fade-right">
+        <img src="section2.jpeg" alt="Farming Image 2" class="animated-image top" data-aos="fade-down">
+        <img src="section3.jpeg" alt="Farming Image 3" class="animated-image right" data-aos="fade-left">
+    </div>
+</section>
+
+
+
+<!-- resources section -->
+<section class="resources-section">
+    <h2 class="section-title" data-aos="fade-down">
+        Crop Rotation Resources & Guides
+    </h2>
+
+    <div class="pentagon-grid">
+        <!-- Soil Analysis -->
+        <div class="pentagon-card" data-aos="zoom-in" data-aos-delay="100">
+            <div class="pentagon">
+                <div class="pentagon-content">
+                    <i class="fas fa-flask"></i>
+                    <h3>Soil Analysis</h3>
+                    <p>Advanced soil testing</p>
+        </div>
+                <div class="glow"></div>
+        </div>
+    </div>
+
+        <!-- Weather Data -->
+        <div class="pentagon-card" data-aos="zoom-in" data-aos-delay="200">
+            <div class="pentagon">
+                <div class="pentagon-content">
+                    <i class="fas fa-cloud-sun"></i>
+                    <h3>Weather Data</h3>
+                    <p>Climate insights</p>
+                </div>
+                <div class="glow"></div>
+            </div>
+        </div>
+
+        <!-- Crop Guide -->
+        <div class="pentagon-card" data-aos="zoom-in" data-aos-delay="300">
+            <div class="pentagon">
+                <div class="pentagon-content">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Crop Guide</h3>
+                    <p>Growth tracking</p>
+                </div>
+                <div class="glow"></div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div class="pentagon-card" data-aos="zoom-in" data-aos-delay="400">
+            <div class="pentagon">
+                <div class="pentagon-content">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Analytics</h3>
+                    <p>Yield insights</p>
+                </div>
+                <div class="glow"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.resources-section {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--card-bg) 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-title {
+    color: var(--neon-green);
+    font-size: 2.5rem;
+    margin-bottom: 80px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.pentagon-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 100px 120px; /* Increased gap */
+    max-width: 1200px; /* Increased max-width */
+    margin: 0 auto;
+    place-items: center;
+}
+
+.pentagon-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.pentagon {
+    width: 250px; /* Increased size */
+    height: 250px; /* Increased size */
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+}
+
+.pentagon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    transition: all 0.3s ease;
+    border: 1px solid var(--nav-border);
+}
+
+.pentagon-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    padding: 40px; /* Increased padding */
+}
+
+.pentagon i {
+    font-size: 3.5rem; /* Larger icons */
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 15px;
+}
+
+.pentagon h3 {
+    color: white;
+    font-size: 1.5rem; /* Larger text */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.pentagon p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    text-align: center;
+    max-width: 150px; /* Constrain text width */
+    margin: 0 auto;
+}
+
+.glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 255, 140, 0.2), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
+/* Hover Effects */
+.pentagon:hover {
+    transform: translateY(-10px) rotateY(10deg);
+}
+
+.pentagon:hover::before {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 255, 140, 0.3);
+}
+
+.pentagon:hover .glow {
+    opacity: 1;
+}
+
+@media (max-width: 1200px) {
+    .pentagon-grid {
+        gap: 60px 80px;
+    }
+    
+    .pentagon {
+        width: 220px;
+        height: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pentagon-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .pentagon {
+        width: 200px;
+        height: 200px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 60px;
+    }
+}
+</style>
+
+
+
+
+<!-- services section -->
+<section class="services-section" id="services">
+    <h2 class="services-title">Our Services</h2>
+    <div class="services-grid">
+        <!-- Only 4 Service Cards -->
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-seedling"></i>
+            </div>
+            <h3>Crop Recommendations</h3>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-flask"></i>
+            </div>
+            <h3>Soil Analysis</h3>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-cloud-sun"></i>
+            </div>
+            <h3>Weather Insights</h3>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Yield Prediction</h3>
+        </div>
+    </div>
+</section>
+
+<style>
+.services-section {
+    padding: 20px 20px 60px;
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--card-bg) 100%);
+    min-height: 80vh; /* Reduced height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align content to top */
+}
+
+.services-title {
+    font-size: 3rem;
+    color: var(--neon-green);
+    margin: 40px 0;
+    text-align: center;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 grid */
+    gap: 30px;
+    max-width: 1000px; /* Reduced max-width for better spacing */
+    width: 100%;
+    margin-top: 20px;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 255, 140, 0.1);
+}
+
+.service-icon {
+    font-size: 2.5rem;
+    color: var(--neon-green);
+    margin-bottom: 15px;
+}
+
+.service-card h3 {
+    color: white;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .services-title {
+        font-size: 2.5rem;
+        margin: 30px 0;
+    }
+}
+</style>
+
+
+
+
+<!-- Farming Categories Section -->
+<section class="farming-categories">
+    <h2 class="section-title" data-aos="fade-down">Choose Your Farming Category</h2>
+    
+    <div class="categories-grid">
+        <!-- Traditional Farming -->
+        <div class="category-card" data-aos="fade-up">
+            <div class="card-content">
+                <div class="icon-wrapper">
+                    <i class="fas fa-tractor"></i>
+                </div>
+                <h3>Traditional Farming</h3>
+                <p>Get recommendations for conventional crop rotation practices</p>
+            </div>
+            <div class="hover-glow"></div>
+        </div>
+
+        <!-- Organic Farming -->
+        <div class="category-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="card-content">
+                <div class="icon-wrapper">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3>Organic Farming</h3>
+                <p>Sustainable and chemical-free farming solutions</p>
+            </div>
+            <div class="hover-glow"></div>
+        </div>
+
+        <!-- Greenhouse -->
+        <div class="category-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="card-content">
+                <div class="icon-wrapper">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Greenhouse</h3>
+                <p>Controlled environment agriculture planning</p>
+            </div>
+            <div class="hover-glow"></div>
+        </div>
+
+        <!-- Hydroponics -->
+        <div class="category-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="card-content">
+                <div class="icon-wrapper">
+                    <i class="fas fa-water"></i>
+                </div>
+                <h3>Hydroponics</h3>
+                <p>Soil-less farming rotation strategies</p>
+            </div>
+            <div class="hover-glow"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+.farming-categories {
+    background: linear-gradient(135deg, var(--dark-bg) 0%, var(--card-bg) 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-title {
+    color: var(--neon-green);
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.category-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--nav-border);
+    border-radius: 15px;
+    height: 200px; /* Reduced height */
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card-content {
+    height: 100%;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.icon-wrapper {
+    width: 50px; /* Smaller icon container */
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 255, 140, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.icon-wrapper i {
+    font-size: 1.5rem;
+    background: linear-gradient(45deg, #00ff87, #60efff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.category-card h3 {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+.category-card p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.hover-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(0, 255, 140, 0.2), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover Effects */
+.category-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 255, 140, 0.3);
+}
+
+.category-card:hover .icon-wrapper {
+    transform: scale(1.1);
+    background: rgba(0, 255, 140, 0.2);
+}
+
+.category-card:hover .hover-glow {
+        opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .category-card {
+        height: 180px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+}
+</style>
+
+
+
+<!-- contact us -->
+<section class="contact-section" data-aos="fade-up" id="contact">
+    <style>
+        .contact-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .contact-section {
+            padding: 60px 20px;
+            background: linear-gradient(rgba(26, 31, 37, 0.9), rgba(37, 45, 52, 0.9)),
+                        url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2532&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+        }
+        
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .contact-details {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--neon-green);
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--neon-green);
+        }
+    </style>
+
+    <div class="contact-content">
+        <h2>Get In Touch</h2>
+        <p>We're here to help with your farming needs. Reach out to us through any of these channels:</p>
+        
+        <div class="contact-details">
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:info@croprotation.com">info@croprotation.com</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <a href="tel:+1234567890">+1 (234) 567-890</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>123 Farm Street, Agriculture City</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- About Section -->
+<style>
+    .about-section {
+        min-height: 100vh;
+        padding: 100px 50px;
+        background: linear-gradient(135deg, 
+            rgba(16, 20, 24, 0.95) 0%,
+            rgba(22, 28, 36, 0.95) 50%,
+            rgba(16, 20, 24, 0.95) 100%),
+            url('farm-background.jpg') no-repeat center center;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Gradient overlay */
+    .about-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at top right,
+            rgba(0, 255, 140, 0.1),
+            transparent 50%
+        );
+    }
+
+    .about-title {
+        font-size: 3.5rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        position: relative;
+        background: linear-gradient(to right, #fff, var(--neon-green));
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .about-description {
+        max-width: 800px;
+        text-align: center;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        margin-bottom: 50px;
+        color: rgba(255, 255, 255, 0.9);
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease 0.2s forwards;
+        position: relative;
+    }
+
+    .explore-btn {
+        padding: 15px 40px;
+        background: linear-gradient(45deg, var(--neon-green), #00e676);
+        color: black;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease 0.4s forwards;
+        box-shadow: 0 5px 15px rgba(0, 255, 140, 0.2);
+    }
+
+    .explore-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 255, 140, 0.3);
+    }
+
+    .about-images {
+        display: flex;
+        gap: 30px;
+        margin-top: 50px;
+        opacity: 0;
+        animation: fadeIn 0.8s ease 0.6s forwards;
+    }
+
+    .about-image {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .about-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+
+<section class="about-section" id="about">
+    <h1 class="about-title">About Us</h1>
+    
+    <p class="about-description">
+        We are dedicated to helping farmers implement sustainable farming practices with the help of advanced AI technology. 
+        Our AI-driven recommendations empower farmers by analyzing soil health, climate conditions, and past crop data. 
+        By integrating machine learning, we ensure optimal crop rotations for increased yield and sustainability.
+    </p>
+
+    <button class="explore-btn"><a href="#services" style="text-decoration: none;">EXPLORE SERVICES</a></button>
+
+    <div class="about-images">
+        <img src="ab1.jpeg" alt="Sustainable Farming" class="about-image">
+        <img src="ab2.jpeg" alt="Farming Technology" class="about-image">
+    </div>
+</section>
+
+
+
+<!-- Footer -->
+<style>
+    /* Footer transition styles */
+    /* Contact to Footer transition */
+    .contact-section {
+        position: relative;
+        z-index: 1;
+        transition: transform 0.4s ease-out;
+    }
+
+    .contact-section::after {
+        content: '';
+        position: absolute;
+        bottom: -50px;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background: linear-gradient(to bottom, transparent, var(--card-bg));
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .contact-section:hover::after {
+        opacity: 1;
+    }
+
+    .contact-section:hover {
+        transform: translateY(-10px);
+    }
+
+    .contact-section:hover + .footer-section {
+        transform: translateY(-10px);
+    }
+    .footer-section {
+        transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .footer-col {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .footer-col:hover {
+        transform: translateY(-5px);
+        opacity: 0.9;
+    }
+
+    .footer-bottom {
+        transition: opacity 0.3s ease;
+    }
+
+    .footer-bottom:hover {
+        opacity: 0.8;
+    }
+    .footer-section {
+        background: linear-gradient(to right, var(--card-bg), var(--dark-bg));
+        padding: 4rem 0 2rem;
+        color: #fff;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+        padding: 0 2rem;
+    }
+
+    .footer-col h3 {
+        color: var(--neon-green);
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+    }
+
+    .footer-col ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-col ul li {
+        margin-bottom: 0.8rem;
+    }
+
+    .footer-col ul li a {
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .footer-col ul li a:hover {
+        color: var(--neon-green);
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-bottom p {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+</style>
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-col">
+            <h3>About CropAI</h3>
+            <ul>
+                <li><a href="#">Our Mission</a></li>
+                <li><a href="#">How It Works</a></li>
+                <li><a href="#">Success Stories</a></li>
+                <li><a href="#">Team</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Resources</h3>
+            <ul>
+                <li><a href="#">Crop Database</a></li>
+                <li><a href="#">Soil Analysis</a></li>
+                <li><a href="#">Weather Data</a></li>
+                <li><a href="#">Best Practices</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 CropAI. All rights reserved.</p>
+    </div>
+</footer>
+
+<style>
+.footer {
+    background: var(--nav-bg);
+    color: #ffffff;
+    padding: 4rem 0 2rem;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    padding: 0 2rem;
+}
+
+.footer-col h3 {
+    color: var(--neon-green);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-col ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.footer-col ul li a:hover {
+    color: var(--neon-green);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+
+<script>
+    AOS.init({
+        once: false, // Animation should run every time the element comes into view
+        duration: 1600, // Animation duration in milliseconds
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+
+<!-- Update the language selection script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Create a mapping of language codes to Google Translate codes
+    const languageMap = {
+        'en': 'en', // English
+        'te': 'te', // Telugu
+        'hi': 'hi', // Hindi
+        'ta': 'ta', // Tamil
+        'kn': 'kn', // Kannada
+        'ml': 'ml'  // Malayalam
+    };
+
+    const languageOptions = document.querySelectorAll('.language-option');
+    
+    languageOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            const lang = this.getAttribute('data-lang');
+            changeLanguage(lang);
+        });
+    });
+
+    function changeLanguage(lang) {
+        // Update active state in dropdown
+        languageOptions.forEach(option => {
+            option.classList.remove('active');
+            if (option.getAttribute('data-lang') === lang) {
+                option.classList.add('active');
+            }
+        });
+
+        // Get the Google Translate language code
+        const translateLang = languageMap[lang];
+
+        // Use Google Translate API to change the page language
+        const select = document.querySelector('.goog-te-combo');
+        if (select) {
+            select.value = translateLang;
+            select.dispatchEvent(new Event('change'));
+        } else {
+            // If Google Translate isn't loaded yet, wait and try again
+            const googleTranslateScript = document.createElement('script');
+            googleTranslateScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+            document.head.appendChild(googleTranslateScript);
+            
+            // Wait for Google Translate to load
+            setTimeout(() => {
+                const select = document.querySelector('.goog-te-combo');
+                if (select) {
+                    select.value = translateLang;
+                    select.dispatchEvent(new Event('change'));
+                }
+            }, 1000);
+        }
+
+        // Store the selected language preference
+        localStorage.setItem('preferredLanguage', lang);
+
+        // Update the UI to show selected language
+        const globeIcon = document.querySelector('.language-selector i');
+        if (globeIcon) {
+            globeIcon.setAttribute('title', `Selected: ${this.getAttribute('data-name')}`);
+        }
+    }
+
+    // Apply stored language preference on page load
+    const storedLang = localStorage.getItem('preferredLanguage');
+    if (storedLang) {
+        changeLanguage(storedLang);
+    }
+});
+
+// Add event listener for Google Translate initialization
+window.addEventListener('load', function() {
+    // Create the Google Translate element if it doesn't exist
+    if (!document.getElementById('google_translate_element')) {
+        const translateDiv = document.createElement('div');
+        translateDiv.id = 'google_translate_element';
+        translateDiv.style.display = 'none';
+        document.body.appendChild(translateDiv);
+    }
+});
+
+// Handle translation completion
+function handleTranslationComplete() {
+    // Remove Google Translate toolbar if present
+    const toolbar = document.querySelector('.goog-te-banner-frame');
+    if (toolbar) {
+        toolbar.style.display = 'none';
+    }
+
+    // Fix any styling issues caused by translation
+    document.body.style.top = '0';
+    document.body.style.position = 'static';
+}
+</script>
+
+<!-- Add Google Translate Script -->
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- Add a hidden div for Google Translate -->
+<div id="google_translate_element" style="display: none;"></div>

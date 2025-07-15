@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CropAI Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="menu-icon-wrapper">
+                <div class="menu-icon" id="menuToggle">
+                    <div class="menu-icon-line first"></div>
+                    <div class="menu-icon-line second"></div>
+                    <div class="menu-icon-line third"></div>
+                </div>
+            </div>
+            <a href="/" class="nav-logo">CropAI</a>
+        </div>
+        <!-- <div class="nav-right">
+            <div class="user-profile">
+                <div class="user-initials">JD</div>
+                <span class="username">John Doe</span>
+            </div>
+        </div> -->
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="logo-section">
+                <div class="logo-text">
+                    <span class="logo-crop">Crop</span>
+                    <span class="logo-ai">AI</span>
+                    <div class="logo-underline"></div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-seedling"></i>
+                    <span>Crop Prediction</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-flask"></i>
+                    <span>Soil Analysis</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cloud-sun"></i>
+                    <span>Weather</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="home.html" class="nav-item logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Add overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome to Dashboard</h1>
+            <p>Track your crop recommendations and soil analysis</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-seedling"></i>
+                <div class="stat-info">
+                    <h3>Current Crops</h3>
+                    <p>5 Active</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-chart-line"></i>
+                <div class="stat-info">
+                    <h3>Yield Prediction</h3>
+                    <p>+15% Expected</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-cloud-sun"></i>
+                <div class="stat-info">
+                    <h3>Weather</h3>
+                    <p>Optimal</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-tasks"></i>
+                <div class="stat-info">
+                    <h3>Tasks</h3>
+                    <p>3 Pending</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Replace the dashboard-grid section with this -->
+        <div class="feature-sections">
+            <a href="inputs1.html" class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <div class="feature-content">
+                    <h2>Crop Recommendations</h2>
+                    <p>Get AI-powered suggestions for optimal crop selection</p>
+                    <span class="feature-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                </div>
+            </a>
+        </div>
+    </main>
+
+<style>
+:root {
+    --neon-green: #00ff8c;
+    --card-bg: #252D34;
+    --dark-bg: #1a1f25;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-primary);
+}
+
+/* Navigation Bar */
+.navbar {
+    background: rgba(37, 45, 52, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-logo {
+    color: var(--neon-green);
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: -280px; /* Start hidden */
+    top: 0;
+    bottom: 0;
+    width: 280px;
+    background: var(--card-bg);
+    transition: left 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-content {
+    padding-top: 60px;
+}
+
+.logo-section {
+    padding: 25px 20px;
+    text-align: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.logo-text {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+}
+
+.logo-crop {
+    color: var(--text-primary);
+}
+
+.logo-ai {
+    color: var(--neon-green);
+    position: relative;
+}
+
+.logo-underline {
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--neon-green),
+        transparent
+    );
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Add glowing animation */
+@keyframes glow {
+    0% {
+        opacity: 0.5;
+        box-shadow: 0 0 5px var(--neon-green);
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 15px var(--neon-green);
+    }
+    100% {
+        opacity: 0.5;
+        box-shadow: 0 0 5px var(--neon-green);
+    }
+}
+
+/* Add hover effect */
+.logo-text:hover .logo-ai {
+    text-shadow: 0 0 15px rgba(0, 255, 140, 0.5);
+}
+
+.logo-text:hover .logo-underline {
+    box-shadow: 0 0 20px var(--neon-green);
+}
+
+/* Add responsive adjustments */
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 28px;
+    }
+    
+    .logo-section {
+        padding: 20px 15px;
+    }
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 0;
+    margin: 0;
+}
+
+.nav-item i {
+    width: 24px;
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+.nav-item:hover, .nav-item.active {
+    background: rgba(0, 255, 140, 0.1);
+    color: var(--neon-green);
+}
+
+.logout {
+    margin-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ff4d4d;
+}
+
+.logout:hover {
+    background: rgba(255, 77, 77, 0.1);
+    color: #ff4d4d;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 0;
+    padding: 6rem 2rem 2rem;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content.shifted {
+    margin-left: 280px;
+}
+
+.welcome-section {
+    margin-bottom: 2rem;
+}
+
+.welcome-section h1 {
+    color: var(--neon-green);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-card i {
+    font-size: 2rem;
+    color: var(--neon-green);
+}
+
+.stat-info h3 {
+    font-size: 1rem;
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.stat-info p {
+    font-size: 1.25rem;
+    margin: 0.5rem 0 0;
+    color: var(--text-primary);
+}
+
+/* Recent Activity */
+.recent-activity {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.recent-activity h2 {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.activity-item {
+    display: flex;
+    align-items: start;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.activity-item i {
+    color: var(--neon-green);
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.activity-info h4 {
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.activity-info p {
+    margin: 0.25rem 0;
+    color: var(--text-secondary);
+}
+
+.activity-info small {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content.shifted {
+        margin-left: 0;
+    }
+}
+
+/* Add these new styles */
+.feature-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 2rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--neon-green);
+    box-shadow: 0 8px 24px rgba(0, 255, 140, 0.1);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: rgba(0, 255, 140, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.feature-icon i {
+    font-size: 1.8rem;
+    color: var(--neon-green);
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    background: var(--neon-green);
+}
+
+.feature-card:hover .feature-icon i {
+    color: var(--dark-bg);
+}
+
+.feature-content {
+    flex: 1;
+}
+
+.feature-content h2 {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary);
+}
+
+.feature-content p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.feature-arrow {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.feature-arrow i {
+    color: var(--neon-green);
+    font-size: 1.2rem;
+}
+
+.feature-card:hover .feature-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Add hover effect for the entire card */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        800px circle at var(--mouse-x) var(--mouse-y),
+        rgba(0, 255, 140, 0.06),
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .feature-sections {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        padding: 1.5rem;
+    }
+
+    .feature-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .feature-icon i {
+        font-size: 1.5rem;
+    }
+}
+
+/* Add these new menu icon styles */
+.menu-icon-wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 15px;
+}
+
+.menu-icon {
+    width: 30px;
+    height: 22px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-icon-line {
+    width: 100%;
+    height: 2px;
+    background: var(--neon-green);
+    border-radius: 2px;
+    transition: all 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    position: relative;
+}
+
+/* Hover effect */
+.menu-icon:hover .menu-icon-line {
+    background: #00ff8c;
+    box-shadow: 0 0 8px rgba(0, 255, 140, 0.5);
+}
+
+/* Animation for menu icon when active */
+.menu-icon.active .first {
+    transform: rotate(45deg) translate(6px, 6px);
+    width: 28px;
+}
+
+.menu-icon.active .second {
+    transform: scale(0);
+    opacity: 0;
+}
+
+.menu-icon.active .third {
+    transform: rotate(-45deg) translate(7px, -7px);
+    width: 28px;
+}
+
+/* Glowing effect on hover */
+.menu-icon::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: radial-gradient(circle at center, 
+        rgba(0, 255, 140, 0.1) 0%,
+        transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-icon:hover::before {
+    opacity: 1;
+}
+
+/* Pulse animation for the active state */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.menu-icon.active::before {
+    animation: pulse 2s infinite;
+}
+
+/* Update the nav-right spacing */
+.nav-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+/* Add user profile styles */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: rgba(0, 255, 140, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.user-profile:hover {
+    background: rgba(0, 255, 140, 0.2);
+}
+
+.user-initials {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: var(--neon-green);
+    color: var(--dark-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.user-profile:hover .user-initials {
+    background: var(--dark-bg);
+    color: var(--neon-green);
+    border-color: var(--neon-green);
+    box-shadow: 0 0 10px rgba(0, 255, 140, 0.5);
+}
+
+.username {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.user-profile:hover .username {
+    color: var(--neon-green);
+}
+
+/* Update responsive styles */
+@media (max-width: 768px) {
+    .username {
+        display: none;
+    }
+    
+    .user-profile {
+        padding: 5px;
+    }
+}
+</style>
+
+<script>
+// Update the menu toggle JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const menuIcon = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.querySelector('.main-content');
+    const overlay = document.getElementById('sidebarOverlay');
+    
+    menuIcon.addEventListener('click', function() {
+        this.classList.toggle('active');
+        sidebar.classList.toggle('active');
+        mainContent.classList.toggle('shifted');
+        overlay.classList.toggle('active');
+    });
+    
+    // Close sidebar when clicking overlay
+    overlay.addEventListener('click', function() {
+        menuIcon.classList.remove('active');
+        sidebar.classList.remove('active');
+        mainContent.classList.remove('shifted');
+        overlay.classList.remove('active');
+    });
+    
+    // Close sidebar when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.sidebar') && 
+            !e.target.closest('.menu-icon-wrapper')) {
+            menuIcon.classList.remove('active');
+            sidebar.classList.remove('active');
+            mainContent.classList.remove('shifted');
+            overlay.classList.remove('active');
+        }
+    });
+    
+    // Prevent sidebar close when clicking inside
+    sidebar.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+    // Add mouse move effect for cards
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+});
+</script>
+</body>
+</html>
+

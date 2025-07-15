@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="" href="favicon.jpg">
+  <title>Crop Rotation Advisory - Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
+        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=2340&q=80');
+      background-size: cover;
+      background-position: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(72, 67, 67, 0.6);
+      backdrop-filter: blur(.5px);
+      border-radius: 8px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 0.35s ease-out;
+    }
+
+    h1 {
+      color: #fff;
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 0.3rem;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    .welcome-text {
+      color: rgba(255, 255, 255, 0.8);
+      text-align: center;
+      margin-bottom: 1rem;
+      animation: fadeIn 0.5s ease-out 0.2s backwards;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      background: rgba(233, 230, 230, 0.1);
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(0, 255, 140, 0.2);
+      transform: translateY(-2px);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background: #00ff8c;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulseButton 2s infinite;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 140, 0.3);
+    }
+
+    .links {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    .links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .links a:hover {
+      color: #00ff8c;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseButton {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    /* Staggered animations for inputs */
+    form input:nth-child(1) { animation: fadeIn 0.5s ease-out 0.1s backwards; }
+    form input:nth-child(2) { animation: fadeIn 0.5s ease-out 0.2s backwards; }
+    form input:nth-child(3) { animation: fadeIn 0.5s ease-out 0.3s backwards; }
+    form input:nth-child(4) { animation: fadeIn 0.5s ease-out 0.4s backwards; }
+
+    .login-link {
+      text-align: center;
+      margin-bottom: 20px;
+      color: rgba(255, 255, 255, 0.8);
+      animation: fadeIn 0.5s ease-out 0.1s backwards;
+    }
+
+    .google-btn {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+    }
+
+    .google-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .google-btn img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .divider {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 45%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+
+    .g_id_signin {
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+
+    .g_id_signin > div {
+      width: 100% !important;
+    }
+
+    #googleBtn {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Crop Rotation Advisory</h1>
+    <p class="welcome-text">Sign up to access a whole range of products</p>
+    
+    <div class="login-link">
+      Already have an account? <a href="login.html" style="color: #00ff8c; text-decoration: none;">Log in</a>
+    </div>
+
+    <div class="google-btn" id="googleBtn">
+      <div id="g_id_onload"
+           data-client_id="1008796212013-aj90vpg0vlk4g10p6m9hjob0kcuvlchv.apps.googleusercontent.com"
+           data-context="signup"
+           data-callback="handleGoogleSignUp"
+           data-auto_select="false"
+           data-itp_support="true">
+      </div>
+      <div class="g_id_signin"
+           data-type="standard"
+           data-size="large"
+           data-theme="outline"
+           data-text="continue_with"
+           data-shape="rectangular"
+           data-logo_alignment="left">
+      </div>
+    </div>
+
+    <div class="divider">Or</div>
+
+    <form id="signup-form" onsubmit="handleRegister(event)"> 
+      <input type="text" name="firstName" placeholder="First Name" required>
+      <input type="text" name="lastName" placeholder="Last Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+      
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <script>
+  async function handleRegister(event) {
+      event.preventDefault();
+      
+      // Get form data
+      const formData = {
+          firstName: document.querySelector('input[name="firstName"]').value,
+          lastName: document.querySelector('input[name="lastName"]').value,
+          email: document.querySelector('input[name="email"]').value,
+          password: document.querySelector('input[name="password"]').value,
+          confirmPassword: document.querySelector('input[name="confirmPassword"]').value
+      };
+
+      // Check if passwords match
+      if (formData.password !== formData.confirmPassword) {
+          alert("Passwords don't match!");
+          return;
+      }
+
+      try {
+          const response = await fetch('/signup-form', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+          });
+
+          const data = await response.json();
+          
+          if (response.ok) {
+              alert(data.message);
+              // Redirect to login page
+              window.location.href = data.redirectUrl;
+          } else {
+              alert(data.message);
+          }
+      } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred during registration');
+      }
+  }
+
+  function initializeGoogleSignIn() {
+      google.accounts.id.initialize({
+          client_id: '1008796212013-aj90vpg0vlk4g10p6m9hjob0kcuvlchv.apps.googleusercontent.com',
+          callback: handleGoogleSignUp
+      });
+      google.accounts.id.prompt();
+  }
+
+  function handleGoogleSignUp(response) {
+      console.log("Google Sign Up Response:", response); // Debug log
+      
+      fetch('/auth/google', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              credential: response.credential,
+              isRegistration: true
+          })
+      })
+      .then(res => res.json())
+      .then(data => {
+          if (data.success) {
+              localStorage.setItem('userData', JSON.stringify(data.user));
+              window.location.href = data.redirectUrl;
+          } else {
+              alert(data.message || 'Registration failed');
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('Registration failed. Please try again.');
+      });
+  }
+  </script>
+</body>
+</html>

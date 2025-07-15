@@ -1,0 +1,281 @@
+
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f1f8e9;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1b5e20;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Grid Layout */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 50px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* Resource Box */
+        .resource {
+            width: 30%;
+            min-width: 280px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            animation: slideUp 1s ease-in-out;
+        }
+		.resource img {
+            width: 75%; /* Reduced image size */
+            max-height: 100px; /* Set max height */
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .resource:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 10px 20px rgba(0, 128, 0, 0.5);
+        }
+
+        .resource img {
+            width: 75%;
+			border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .resource:hover img {
+            transform: rotateY(10deg) scale(1.1);
+        }
+
+        .resource p {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #2e7d32;
+        }
+
+        /* Information Box */
+        .info-section {
+            width: 100%;
+            height: 100vh;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: #e8f5e9;
+            border-top: 5px solid #1b5e20;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+        }
+
+        .info-section.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+            animation: zoomIn 1.5s ease-in-out;
+        }
+
+        .info-section h2 {
+            color: #1b5e20;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .info-section p {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #2c3e50;
+            max-width: 800px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .resource {
+                width: 45%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .resource {
+                width: 90%;
+            }
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+
+
+    <!-- Page Title -->
+    <h1>📚 Crop Rotation Resources & Guides 🌾</h1>
+
+    <!-- Resource Grid -->
+    <div class="container">
+        <div class="resource" onclick="showInfo('soil')">
+            <img src="crop.jpg" alt="Soil Database">
+            <p>Soil & Crop Database</p>
+        </div>
+
+        <div class="resource" onclick="showInfo('weather')">
+            <img src="whether1.jpg" alt="Weather Data">
+            <p>Weather & Climate Data</p>
+        </div>
+
+        <div class="resource" onclick="showInfo('pest')">
+            <img src="C:\Users\bhavya\OneDrive\Pictures\pandd.png" alt="Pest Information">
+            <p>Pest & Disease Information</p>
+        </div>
+
+        <div class="resource" onclick="showInfo('fertilizer')">
+            <img src="C:\Users\bhavya\OneDrive\Pictures\f.png" alt="Fertilizer Guidelines">
+            <p>Fertilizer & Irrigation Guidelines</p>
+        </div>
+
+        <div class="resource" onclick="showInfo('market')">
+            <img src="https://via.placeholder.com/300?text=Market+Info" alt="Market Information">
+            <p>Market & Economic Resources</p>
+        </div>
+
+        <div class="resource" onclick="showInfo('support')">
+            <img src="https://via.placeholder.com/300?text=Farmer+Support" alt="Farmer Support">
+            <p>Farmer Support & Learning</p>
+        </div>
+    </div>
+
+    <!-- Information Sections -->
+    <div id="soil" class="info-section">
+        <h2>🌱 Soil & Crop Database</h2>
+        <p>Understanding soil properties is crucial for healthy crops. Learn about soil nutrients, pH levels, and how different crops benefit from various soil types.</p>
+		<p><strong>Key Information:</strong></p>
+        <p>🪵 <strong>Soil Types:</strong> Sandy, clayey, and loamy soils support different crops.</p>
+        <p>🌿 <strong>Crop Suitability:</strong> Legumes improve soil nitrogen, while root crops help break compacted soil.</p>
+        <p>🌾 <strong>Soil Nutrients:</strong> Rotating crops helps maintain balanced nutrient levels in the soil.</p>
+        <p>🔄 <strong>Crop Rotation Benefits:</strong> Reduces pests, enhances soil fertility, and prevents soil depletion.</p>
+
+    </div>
+
+    <div id="weather" class="info-section">
+        <h2>⛅ Weather & Climate Data</h2>
+        <p>Weather conditions greatly impact crop growth. Learn how to plan rotations based on rainfall, temperature, and seasonal changes.</p>
+		<p><strong>Key Information:</strong></p>
+        <p>🌧 <strong>Rainfall Patterns:</strong> Helps decide which crops to plant based on available water.</p>
+        <p>🌡 <strong>Temperature Ranges:</strong> Some crops thrive in cold weather (wheat, barley), while others need warmth (rice, maize).</p>
+        <p>❄ <strong>Frost & Drought Risks:</strong> Knowing frost-prone periods helps prevent crop loss.</p>
+        <p>🌱 <strong>Growing Seasons:</strong> Some crops need specific temperatures; for example, rice grows best in warm and humid conditions.</p>
+        <p>🔍 <strong>Weather Forecasting:</strong> Farmers can use weather data to time planting and irrigation efficiently.</p>
+    </div>
+
+    <div id="pest" class="info-section">
+        <h2>🐛 Pest & Disease Information</h2>
+        <p>Discover how to identify and control common pests and diseases naturally, ensuring high-yield harvests.</p>
+		<p>Pests and diseases cause significant crop loss every year. Proper pest management strategies can increase yields and reduce losses.</p>
+        <p><strong>Key Information:</strong></p>
+        <p>🦗 <strong>Common Pests:</strong> Aphids (attack vegetables), Locusts (destroy large crop areas), Stem borers (damage rice and maize).</p>
+        <p>🌱 <strong>Common Crop Diseases:</strong> Powdery mildew (affects fruits and vegetables), Rust (common in wheat), Blight (damages potatoes and tomatoes).</p>
+        <p>🐞 <strong>Natural Pest Control:</strong> Using ladybugs to eat aphids, rotating crops to break pest life cycles, using neem oil as an organic pesticide.</p>
+        <p>🧪 <strong>Chemical vs. Organic Solutions:</strong> Farmers must balance between chemical pesticides and eco-friendly methods.</p>
+    </div>
+
+    <div id="fertilizer" class="info-section">
+        <h2>🌾 Fertilizer & Irrigation Guidelines</h2>
+		<p>Fertilization and irrigation are key components of crop growth. Improper use can lead to soil depletion and water waste.</p>
+        <p><strong>Key Information:</strong></p>
+        <p>🌱 <strong>Types of Fertilizers:</strong></p>
+        <p>Organic fertilizers (compost, manure) improve soil health.</p>
+        <p>Chemical fertilizers (NPK) provide rapid growth.</p>
+        <p>💧 <strong>Best Irrigation Methods:</strong></p>
+        <p>Drip irrigation (best for saving water).</p>
+        <p>Sprinkler irrigation (useful for large fields).</p>
+        <p>Furrow irrigation (common for row crops).</p>
+        <p>🕒 <strong>Fertilizer Timing:</strong></p>
+        <p>Nitrogen-based fertilizers work best early in plant growth.</p>
+        <p>Phosphorus fertilizers improve root development.</p>
+        <p>⚠ <strong>Overuse Problems:</strong></p>
+        <p>Too much nitrogen burns plants.</p>
+        <p>Excess fertilizers can pollute nearby water sources.</p>
+    </div>
+
+    <div id="market" class="info-section">
+        <h2>📊 Market & Economic Resources</h2>
+        <p>Stay updated with crop demand, pricing trends, and marketing strategies for higher profitability.</p>
+		<p>Farmers need to understand market trends to sell crops at the best prices.</p>
+        <p><strong>Key Information:</strong></p>
+        <p>📈 <strong>Demand-Based Crops:</strong> Growing high-demand crops (like wheat, soybeans, and corn) increases profitability.</p>
+        <p>📅 <strong>Seasonal Pricing:</strong> Prices change based on season; for example, tomatoes are cheap in summer but expensive in winter.</p>
+        <p>🌍 <strong>Export Opportunities:</strong> Some crops (like spices and tea) have high export value.</p>
+        <p>🏛 <strong>Government Schemes:</strong> Many governments offer subsidies and support programs for farmers.</p>
+        <p>❄ <strong>Storage & Transport:</strong> Proper cold storage helps prevent spoilage and reduces losses.</p>
+    </div>
+
+    <div id="support" class="info-section">
+        <h2>👩‍🌾 Farmer Support & Learning</h2>
+        <p>Connect with agricultural experts, access online training, and join farming communities for continuous learning.</p>
+		<p>Farmers need continuous learning and support to improve their techniques.</p>
+        <p><strong>Key Information:</strong></p>
+        <p>🎓 <strong>Online Farming Courses:</strong> Websites like FAO, ICAR, and KVK provide free training.</p>
+        <p>☎ <strong>Government Helplines:</strong> Many regions have farmer support centers for free guidance.</p>
+        <p>🌱 <strong>Local Farming Communities:</strong> Joining farmer networks allows for knowledge sharing.</p>
+        <p>📱 <strong>Mobile Apps for Farmers:</strong> Apps provide real-time weather updates, fertilizer recommendations, and pest alerts.</p>
+        <p>💰 <strong>Financial Support:</strong> Banks and NGOs offer loans and grants to help farmers expand their farming business.</p>
+    </div>
+
+    <!-- JavaScript for Smooth Scrolling -->
+    <script>
+        function showInfo(id) {
+            document.querySelectorAll('.info-section').forEach(section => {
+                section.classList.remove('show');
+                section.style.display = 'none';
+            });
+
+            let selectedSection = document.getElementById(id);
+            selectedSection.style.display = 'flex';
+
+            setTimeout(() => selectedSection.classList.add('show'), 10);
+
+            window.scrollTo({
+                top: selectedSection.offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
